@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SinerjiOps - Connexion</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4F46E5;
+            --secondary-color: #6B7280;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --danger-color: #EF4444;
+            --light-bg: #F9FAFB;
+            --border-color: #E5E7EB;
+            --text-primary: #111827;
+            --text-secondary: #6B7280;
+            --font-size-sm: 0.875rem;
+            --font-size-xs: 0.75rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 0.75rem;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* LOGIN SCREEN */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+            width: 100%;
+            max-width: 450px;
+            animation: slideInUp 0.6s ease;
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-header {
+            background: linear-gradient(135deg, var(--primary-color), #6366F1);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .login-logo {
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-logo img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .login-header h2 {
+            margin: 0;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-header p {
+            margin: 0.5rem 0 0 0;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin: 1rem;
+            padding: 0.25rem;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            background: none;
+            border-radius: 8px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), #6366F1);
+            color: white;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .login-form {
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .login-form.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .btn-block {
+            width: 100%;
+            padding: 0.875rem;
+            background: linear-gradient(135deg, var(--primary-color), #6366F1);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-block:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary-color), #4B5563);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 114, 128, 0.4);
+            color: white;
+            text-decoration: none;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .form-footer p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-toggle .form-control {
+            padding-right: 3rem;
+        }
+
+        .password-toggle-btn {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .password-toggle-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .validation-message {
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .validation-message.valid {
+            color: var(--success-color);
+        }
+
+        .validation-message.invalid {
+            color: var(--danger-color);
+        }
+
+        /* MAIN APP */
+        .main-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: none;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), #6366F1);
+            padding: 1.5rem 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.75rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .navbar-brand img {
+            width: 40px;
+            height: 40px;
+            margin-right: 0.5rem;
+            object-fit: contain;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .user-info {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .section-title {
+            color: var(--text-primary);
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), #6366F1);
+            border-radius: 2px;
+        }
+
+        /* TABLEAUX - SOLUTION PROPRE */
+        .clean-table {
+            table-layout: fixed !important;
+            width: 100% !important;
+            border-collapse: collapse !important;
+            margin: 20px 0 !important;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .clean-table th, .clean-table td {
+            border: none !important;
+            padding: 12px 16px !important;
+            text-align: left !important;
+            vertical-align: middle !important;
+            word-wrap: break-word !important;
+            word-break: break-word !important;
+            box-sizing: border-box !important;
+        }
+
+        .clean-table th {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
+            font-weight: 600 !important;
+            color: var(--text-primary) !important;
+            font-size: 0.875rem !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.5px !important;
+            border-bottom: 2px solid var(--primary-color) !important;
+        }
+
+        .clean-table td {
+            background-color: white !important;
+            border-bottom: 1px solid #f1f3f4 !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .clean-table tbody tr:hover td {
+            background-color: #f8f9fa !important;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        /* Largeurs fixes comme dans fix-all.html */
+        .col-1 { width: 20% !important; }
+        .col-2 { width: 15% !important; }
+        .col-3 { width: 12% !important; }
+        .col-4 { width: 12% !important; }
+        .col-5 { width: 12% !important; }
+        .col-6 { width: 12% !important; }
+        .col-7 { width: 17% !important; }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), #6366F1);
+            color: white;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning-color), #F59E0B);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger-color), #DC2626);
+            color: white;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-sm {
+            padding: 0.375rem 0.75rem;
+            font-size: 0.75rem;
+        }
+
+        .badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .bg-primary { 
+            background: linear-gradient(135deg, var(--primary-color), #6366F1) !important; 
+            color: white !important;
+        }
+        .bg-warning { 
+            background: linear-gradient(135deg, var(--warning-color), #F59E0B) !important; 
+            color: white !important;
+        }
+        .bg-success { 
+            background: linear-gradient(135deg, var(--success-color), #059669) !important; 
+            color: white !important;
+        }
+        .bg-secondary { 
+            background: linear-gradient(135deg, var(--secondary-color), #4B5563) !important; 
+            color: white !important;
+        }
+        .bg-danger { 
+            background: linear-gradient(135deg, var(--danger-color), #DC2626) !important; 
+            color: white !important;
+        }
+
+        .nav-tabs {
+            border: none;
+            margin-bottom: 2rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 0.5rem;
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            color: var(--text-secondary);
+            padding: 1rem 1.5rem;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            margin: 0 0.25rem;
+        }
+
+        .nav-tabs .nav-link:hover {
+            background: rgba(79, 70, 229, 0.1);
+            color: var(--primary-color);
+        }
+
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, var(--primary-color), #6366F1);
+            color: white;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .tab-content {
+            padding: 1rem 0;
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), #6366F1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .fab {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), #6366F1);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(79, 70, 229, 0.5);
+        }
+
+        .fab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+            animation: rotate 3s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .fab i {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- LOGIN SCREEN -->
+    <div class="login-container" id="loginScreen">
+        <div class="login-card">
+            <div class="login-header">
+                            <div class="login-logo">
+                <img src="logo.png" alt="SinerjiOps Logo">
+            </div>
+            <h2>SinerjiOps</h2>
+                <p>Connectez-vous à votre espace</p>
+            </div>
+            
+            <div class="login-tabs">
+                <button class="tab-btn active" onclick="switchTab('login')">
+                    <i class="fas fa-sign-in-alt"></i> Connexion
+                </button>
+                <button class="tab-btn" onclick="switchTab('register')">
+                    <i class="fas fa-user-plus"></i> Créer un compte
+                </button>
+            </div>
+
+            <!-- Formulaire de connexion -->
+            <form class="login-form active" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="votre@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Mot de passe</label>
+                    <div class="password-toggle">
+                        <input type="password" id="loginPassword" class="form-control" placeholder="Votre mot de passe" required>
+                        <button type="button" class="password-toggle-btn" onclick="togglePassword('loginPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn-block">
+                    <i class="fas fa-sign-in-alt"></i> Se connecter
+                </button>
+                
+                <div class="form-footer">
+                    <p>Pas encore de compte ? <a href="#" onclick="switchTab('register')" class="btn-secondary">Créer un compte</a></p>
+                </div>
+            </form>
+
+            <!-- Formulaire de création de compte -->
+            <form class="login-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerFirstName">Prénom *</label>
+                    <input type="text" id="registerFirstName" class="form-control" placeholder="Votre prénom" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerLastName">Nom *</label>
+                    <input type="text" id="registerLastName" class="form-control" placeholder="Votre nom" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email *</label>
+                    <input type="email" id="registerEmail" class="form-control" placeholder="votre@email.com" required>
+                    <div class="validation-message" id="emailValidation"></div>
+                </div>
+                <div class="form-group">
+                    <label for="registerPhone">Téléphone</label>
+                    <input type="tel" id="registerPhone" class="form-control" placeholder="+33 6 12 34 56 78">
+                </div>
+                <div class="form-group">
+                    <label for="registerCompany">Entreprise</label>
+                    <input type="text" id="registerCompany" class="form-control" placeholder="Nom de votre entreprise">
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Mot de passe *</label>
+                    <div class="password-toggle">
+                        <input type="password" id="registerPassword" class="form-control" placeholder="Minimum 8 caractères" required>
+                        <button type="button" class="password-toggle-btn" onclick="togglePassword('registerPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="validation-message" id="passwordValidation"></div>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirmer le mot de passe *</label>
+                    <div class="password-toggle">
+                        <input type="password" id="registerConfirmPassword" class="form-control" placeholder="Répétez votre mot de passe" required>
+                        <button type="button" class="password-toggle-btn" onclick="togglePassword('registerConfirmPassword')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="validation-message" id="confirmPasswordValidation"></div>
+                </div>
+                <button type="submit" class="btn-block">
+                    <i class="fas fa-user-plus"></i> Créer mon compte
+                </button>
+                
+                <div class="form-footer">
+                    <p>Déjà un compte ? <a href="#" onclick="switchTab('login')" class="btn-secondary">Se connecter</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP -->
+    <div class="main-container" id="mainApp">
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <img src="logo.png" alt="SinerjiOps Logo">
+                SinerjiOps
+            </div>
+            <div class="user-info">
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <span id="userDisplayName">Utilisateur</span>
+                <span id="userRole">(Client)</span>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
+            </div>
+        </nav>
+
+        <div class="content">
+            <h1 class="section-title">
+                <i class="fas fa-chart-line"></i>
+                Tableau de Bord
+            </h1>
+
+            <!-- Statistiques -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Interventions en cours</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <div class="stat-number">45</div>
+                    <div class="stat-label">Pièces en stock</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Commandes en attente</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-number">156</div>
+                    <div class="stat-label">Interventions terminées</div>
+                </div>
+            </div>
+
+            <ul class="nav nav-tabs" id="mainTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="interventions-tab" data-bs-toggle="tab" data-bs-target="#interventions" type="button" role="tab">
+                        <i class="fas fa-wrench"></i> Interventions
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pieces-tab" data-bs-toggle="tab" data-bs-target="#pieces" type="button" role="tab">
+                        <i class="fas fa-cogs"></i> Pièces
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="commandes-tab" data-bs-toggle="tab" data-bs-target="#commandes" type="button" role="tab">
+                        <i class="fas fa-shopping-cart"></i> Commandes
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="mainTabsContent">
+                <!-- INTERVENTIONS -->
+                <div class="tab-pane fade show active" id="interventions" role="tabpanel">
+                    <h3><i class="fas fa-wrench"></i> Interventions</h3>
+                    <table class="clean-table">
+                        <thead>
+                            <tr>
+                                <th class="col-1">Équipement</th>
+                                <th class="col-2">Demandeur</th>
+                                <th class="col-3">Date demande</th>
+                                <th class="col-4">Date prévue</th>
+                                <th class="col-5">Statut</th>
+                                <th class="col-6">Priorité</th>
+                                <th class="col-7">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-1"><strong>Système de ventilation</strong></td>
+                                <td class="col-2">
+                                    <div>
+                                        <span style="font-weight: 500;">Pierre Durand</span><br>
+                                        <small style="color: #6B7280;">Qualité</small>
+                                    </div>
+                                </td>
+                                <td class="col-3">10/06/2024</td>
+                                <td class="col-4">12/06/2024</td>
+                                <td class="col-5"><span class="badge bg-primary">Demande</span></td>
+                                <td class="col-6"><span class="badge bg-secondary">Normale</span></td>
+                                <td class="col-7">
+                                    <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Modifier</button>
+                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Supprimer</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-1"><strong>Pompe hydraulique</strong></td>
+                                <td class="col-2">
+                                    <div>
+                                        <span style="font-weight: 500;">Jean Dupont</span><br>
+                                        <small style="color: #6B7280;">Production</small>
+                                    </div>
+                                </td>
+                                <td class="col-3">01/06/2024</td>
+                                <td class="col-4">05/06/2024</td>
+                                <td class="col-5"><span class="badge bg-warning">En cours</span></td>
+                                <td class="col-6"><span class="badge bg-danger">Haute</span></td>
+                                <td class="col-7">
+                                    <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Modifier</button>
+                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Supprimer</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- PIÈCES -->
+                <div class="tab-pane fade" id="pieces" role="tabpanel">
+                    <h3><i class="fas fa-cogs"></i> Pièces</h3>
+                    <table class="clean-table">
+                        <thead>
+                            <tr>
+                                <th class="col-1">Nom</th>
+                                <th class="col-2">Référence</th>
+                                <th class="col-3">Stock</th>
+                                <th class="col-4">Prix</th>
+                                <th class="col-5">Fournisseur</th>
+                                <th class="col-6">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-1"><strong>Joint d'étanchéité</strong></td>
+                                <td class="col-2"><code>JNT-001</code></td>
+                                <td class="col-3"><span class="badge bg-success">12</span></td>
+                                <td class="col-4">5.50 €</td>
+                                <td class="col-5">Fournisseur A</td>
+                                <td class="col-6">
+                                    <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Modifier</button>
+                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Supprimer</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- COMMANDES -->
+                <div class="tab-pane fade" id="commandes" role="tabpanel">
+                    <h3><i class="fas fa-shopping-cart"></i> Commandes</h3>
+                    <table class="clean-table">
+                        <thead>
+                            <tr>
+                                <th class="col-1">Numéro</th>
+                                <th class="col-2">Date</th>
+                                <th class="col-3">Fournisseur</th>
+                                <th class="col-4">Montant</th>
+                                <th class="col-5">Statut</th>
+                                <th class="col-6">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="col-1"><strong>CMD-2024-001</strong></td>
+                                <td class="col-2">10/06/2024</td>
+                                <td class="col-3">Fournisseur A</td>
+                                <td class="col-4">150.00 €</td>
+                                <td class="col-5"><span class="badge bg-warning">En attente</span></td>
+                                <td class="col-6">
+                                    <button class="btn btn-sm btn-warning"><i class="fas fa-edit"></i> Modifier</button>
+                                    <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i> Supprimer</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bouton d'action flottant -->
+    <div class="fab" onclick="alert('Ajouter une nouvelle intervention')">
+        <i class="fas fa-plus"></i>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Variables globales
+        let currentUser = null;
+        let users = [
+            {
+                email: 'admin@maintenance.com',
+                password: 'admin123',
+                firstName: 'Admin',
+                lastName: 'Système',
+                role: 'admin',
+                company: 'Maintenance Pro'
+            },
+            {
+                email: 'pierre.durand@entreprise.com',
+                password: 'client123',
+                firstName: 'Pierre',
+                lastName: 'Durand',
+                role: 'client',
+                company: 'Entreprise ABC'
+            }
+        ];
+
+        // Fonction pour basculer entre les onglets
+        function switchTab(tab) {
+            // Mettre à jour les boutons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Mettre à jour les formulaires
+            document.querySelectorAll('.login-form').forEach(form => form.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.getElementById('loginForm').classList.add('active');
+            } else if (tab === 'register') {
+                document.getElementById('registerForm').classList.add('active');
+            }
+        }
+
+        // Fonction pour afficher/masquer le mot de passe
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const button = input.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Validation en temps réel
+        document.getElementById('registerEmail').addEventListener('input', function() {
+            const email = this.value;
+            const validation = document.getElementById('emailValidation');
+            
+            if (email.includes('@') && email.includes('.')) {
+                validation.textContent = '✓ Email valide';
+                validation.className = 'validation-message valid';
+            } else if (email.length > 0) {
+                validation.textContent = '✗ Email invalide';
+                validation.className = 'validation-message invalid';
+            } else {
+                validation.textContent = '';
+            }
+        });
+
+        document.getElementById('registerPassword').addEventListener('input', function() {
+            const password = this.value;
+            const validation = document.getElementById('passwordValidation');
+            
+            if (password.length >= 8) {
+                validation.textContent = '✓ Mot de passe valide';
+                validation.className = 'validation-message valid';
+            } else if (password.length > 0) {
+                validation.textContent = '✗ Minimum 8 caractères';
+                validation.className = 'validation-message invalid';
+            } else {
+                validation.textContent = '';
+            }
+        });
+
+        document.getElementById('registerConfirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = this.value;
+            const validation = document.getElementById('confirmPasswordValidation');
+            
+            if (confirmPassword === password && password.length >= 8) {
+                validation.textContent = '✓ Mots de passe identiques';
+                validation.className = 'validation-message valid';
+            } else if (confirmPassword.length > 0) {
+                validation.textContent = '✗ Mots de passe différents';
+                validation.className = 'validation-message invalid';
+            } else {
+                validation.textContent = '';
+            }
+        });
+
+        // Gestion de la connexion
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Vérifier les identifiants
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                currentUser = user;
+                loginSuccess();
+            } else {
+                alert('Email ou mot de passe incorrect');
+            }
+        });
+
+        // Gestion de la création de compte
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('registerFirstName').value;
+            const lastName = document.getElementById('registerLastName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('registerPhone').value;
+            const company = document.getElementById('registerCompany').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            
+            // Validation
+            if (password !== confirmPassword) {
+                alert('Les mots de passe ne correspondent pas');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('Le mot de passe doit contenir au moins 8 caractères');
+                return;
+            }
+            
+            if (!email.includes('@') || !email.includes('.')) {
+                alert('Email invalide');
+                return;
+            }
+            
+            // Vérifier si l'email existe déjà
+            if (users.find(u => u.email === email)) {
+                alert('Cet email est déjà utilisé');
+                return;
+            }
+            
+            // Créer le nouvel utilisateur
+            const newUser = {
+                email: email,
+                password: password,
+                firstName: firstName,
+                lastName: lastName,
+                phone: phone,
+                company: company,
+                role: 'client'
+            };
+            
+            users.push(newUser);
+            currentUser = newUser;
+            
+            alert('Compte créé avec succès ! Vous êtes maintenant connecté.');
+            loginSuccess();
+        });
+
+        // Fonction de connexion réussie
+        function loginSuccess() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            
+            // Mettre à jour l'affichage utilisateur
+            document.getElementById('userDisplayName').textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+            document.getElementById('userRole').textContent = `(${currentUser.role === 'admin' ? 'Admin' : 'Client'})`;
+            
+            // Ajuster l'interface selon le rôle
+            if (currentUser.role === 'admin') {
+                // Interface admin complète
+                document.querySelectorAll('.nav-link').forEach(link => link.style.display = 'block');
+            } else {
+                // Interface client limitée
+                document.querySelectorAll('.nav-link').forEach(link => link.style.display = 'block');
+            }
+        }
+
+        // Fonction de déconnexion
+        function logout() {
+            currentUser = null;
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('mainApp').style.display = 'none';
+            
+            // Réinitialiser les formulaires
+            document.getElementById('loginForm').reset();
+            document.getElementById('registerForm').reset();
+            
+            // Revenir à l'onglet connexion
+            switchTab('login');
+        }
+
+        // Test d'alignement automatique
+        function testAlignment() {
+            const tables = document.querySelectorAll('.clean-table');
+            tables.forEach((table, tableIndex) => {
+                const headers = table.querySelectorAll('th');
+                const firstRow = table.querySelector('tbody tr');
+                if (!firstRow) return;
+                
+                const cells = firstRow.querySelectorAll('td');
+                console.log(`=== Tableau ${tableIndex + 1} ===`);
+                console.log(`Headers: ${headers.length}, Cells: ${cells.length}`);
+                
+                headers.forEach((header, index) => {
+                    const cell = cells[index];
+                    if (cell) {
+                        const headerWidth = header.offsetWidth;
+                        const cellWidth = cell.offsetWidth;
+                        const difference = Math.abs(headerWidth - cellWidth);
+                        
+                        console.log(`Colonne ${index + 1}: Header=${headerWidth}px, Cell=${cellWidth}px, Différence=${difference}px`);
+                    }
+                });
+            });
+        }
+
+        // Test au chargement
+        window.addEventListener('load', () => {
+            // L'écran de connexion est affiché par défaut
+        });
+
+        // Test manuel
+        window.testAlignment = testAlignment;
+    </script>
+</body>
+</html> 
